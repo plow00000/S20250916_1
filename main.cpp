@@ -8,14 +8,14 @@ int main()
 
 	//플레이어 정보
 	int PlayerHP = 100;
-	int PlayerDef = 20;
-	int PlayerReg = 3;
+	int PlayerPhysicalDefence = 20;
+	int PlayerMagicalRegist = 3;
 
 	//몬스터 정보
-	int MonsterAD = 30;
-	int MonsterAP = 10;
+	int MonsterPhysicalPower = 30;
+	int MonsterMagicalPower = 10;
 
-	int Damage = (MonsterAD - PlayerDef) + (MonsterAP - PlayerReg);
+	int Damage = (MonsterPhysicalPower - PlayerPhysicalDefence) + (MonsterMagicalPower - PlayerMagicalRegist);
 
 	PlayerHP = PlayerHP - Damage;
 
