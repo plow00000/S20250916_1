@@ -1,25 +1,68 @@
 #include <iostream>
+#include <Windows.h>
+#include <conio.h>
 
 using namespace std;
 
 int main()
 {
-	//연산자 우선순위 : *, /, % > +, -
+	int PlayerX = 1;
+	int PlayerY = 1;
+	char PlayerShape = '#';
 
-	//플레이어 정보
-	int PlayerHP = 100;
-	int PlayerPhysicalDefence = 20;
-	int PlayerMagicalRegist = 3;
+	bool bIsRunning = true;
+	int KeyCode = 0;
 
-	//몬스터 정보
-	int MonsterPhysicalPower = 30;
-	int MonsterMagicalPower = 10;
+	int Map[10][10] = {
+		{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
+		{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+		{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+		{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+		{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+		{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+		{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+		{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+		{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+		{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }
+	};
 
-	int Damage = (MonsterPhysicalPower - PlayerPhysicalDefence) + (MonsterMagicalPower - PlayerMagicalRegist);
+	while (bIsRunning)
+	{
+		system("cls");
+		for (int Y = 0; Y < 10; Y++)
+		{
+			for (int X = 0; X < 10; X++)
+			{
+				if (PlayerX == X && PlayerY == Y) { cout << PlayerShape; }
+				else { cout << ((bool)Map[Y][X] ? '*' : ' '); }
+			}
+			cout << '\n';
+		}
 
-	PlayerHP = PlayerHP - Damage;
+		KeyCode = _getch();
 
-	cout << "플레이어가 몬스터에게 입은 피해량 : " << Damage << endl << "현재 플레이어 HP : " << PlayerHP << endl;
+		switch (KeyCode)
+		{
+		case 'w':
+			PlayerY--;
+			if (Map[PlayerY][PlayerX] == 1) { PlayerY++; }
+			break;
+		case 's':
+			PlayerY++;
+			if (Map[PlayerY][PlayerX] == 1) { PlayerY--; }
+			break;
+		case 'a':
+			PlayerX--;
+			if (Map[PlayerY][PlayerX] == 1) { PlayerX++; }
+			break;
+		case 'd':
+			PlayerX++;
+			if (Map[PlayerY][PlayerX] == 1) { PlayerX--; }
+			break;
+		default:
+			break;
+		}
+	}
 
 	return 0;
 }
