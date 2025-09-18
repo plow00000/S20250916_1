@@ -4,37 +4,51 @@
 
 using namespace std;
 
+enum{
+	WindowWidth = 120,
+	WindowHeight = 28
+};
+
 int main()
 {
-	int PlayerX = 1;
-	int PlayerY = 1;
-	char PlayerShape = '#';
+	int PlayerX = 2;
+	int PlayerY = 2;
+	char PlayerShape = 'P';
 
 	bool bIsRunning = true;
 	int KeyCode = 0;
 
-	int Map[10][10] = {
-		{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
-		{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-		{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-		{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-		{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-		{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-		{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-		{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-		{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-		{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }
-	};
+
+	// 35='#' 벽, 46 = '.' 갈 수 있는 길, 32=' ' 공허 공간, 10='\n' 개행용
+	char Map[WindowHeight][WindowWidth];
+
+	for (int Y = 0; Y < WindowHeight; Y++)
+	{
+		for(int X = 0; X < WindowWidth; X++)
+		{
+			if (Y == 0 || Y == WindowHeight - 1 || X == 0 || X == WindowWidth - 1)
+			{
+				Map[Y][X] = 32;
+			}
+			else if (Y == 1 || Y == WindowHeight - 2 || X == 1 || X == WindowWidth - 2)
+			{
+				Map[Y][X] = 35;
+			}
+			else
+			{
+				Map[Y][X] = 46;
+			}
+		}
+	}
 
 	while (bIsRunning)
 	{
 		system("cls");
-		for (int Y = 0; Y < 10; Y++)
+		for (int Y = 0; Y < WindowHeight; Y++)
 		{
-			for (int X = 0; X < 10; X++)
+			for (int X = 0; X < WindowWidth; X++)
 			{
-				if (PlayerX == X && PlayerY == Y) { cout << PlayerShape; }
-				else { cout << ((bool)Map[Y][X] ? '*' : ' '); }
+				cout << ((PlayerX == X && PlayerY == Y) ? PlayerShape : Map[Y][X]);
 			}
 			cout << '\n';
 		}
@@ -45,19 +59,22 @@ int main()
 		{
 		case 'w':
 			PlayerY--;
-			if (Map[PlayerY][PlayerX] == 1) { PlayerY++; }
+			if (Map[PlayerY][PlayerX] == 35) { PlayerY++; }
 			break;
 		case 's':
 			PlayerY++;
-			if (Map[PlayerY][PlayerX] == 1) { PlayerY--; }
+			if (Map[PlayerY][PlayerX] == 35) { PlayerY--; }
 			break;
 		case 'a':
 			PlayerX--;
-			if (Map[PlayerY][PlayerX] == 1) { PlayerX++; }
+			if (Map[PlayerY][PlayerX] == 35) { PlayerX++; }
 			break;
 		case 'd':
 			PlayerX++;
-			if (Map[PlayerY][PlayerX] == 1) { PlayerX--; }
+			if (Map[PlayerY][PlayerX] == 35) { PlayerX--; }
+			break;
+		case 'q':
+			bIsRunning = false;
 			break;
 		default:
 			break;
